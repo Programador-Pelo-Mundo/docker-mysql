@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - mysql-logs:/var/log/mysql
+    healthcheck:
+      start_period: 30s
+      interval: 30s
+      timeout: 3s
+      retries: 6
+      test: MYSQL_PWD=$$MYSQL_ROOT_PASSWORD mysqladmin -h $$(hostname --ip-address) -u root ping || exit 1
+    restart: unless-stopped
+    ports:
+      - 3330:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: mysql
+    volumes:
+      - phpmyadmin-sessions:/sessions
+    depends_on:
+      - mysql
+    ports:
+      - 3333:80
+
+volumes:
+  mysql-data:
+  mysql-logs:
+  phpmyadmin-sessions:
