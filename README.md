@@ -11,7 +11,7 @@ With few dependencies, it gives you an operational database with a user-friendly
 
 - [Make](https://www.gnu.org/software/make/)
 - [Docker](https://www.docker.com)
-- [Docker Compose](hhttps://docs.docker.com/compose/)
+- [Docker Compose](https://docs.docker.com/compose/)
 - Any web browser
 
 
